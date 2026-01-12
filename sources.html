@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>参照データソースと選定根拠 | Rehaence</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        body { background-color: #f8f9fa; font-family: "Helvetica Neue", Arial, sans-serif; color: #333; line-height: 1.8; }
+        .container { max-width: 900px; background: white; padding: 50px; margin-top: 30px; margin-bottom: 30px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+        .source-card { border-left: 5px solid #2c3e50; background-color: #fcfcfc; padding: 20px; margin-bottom: 30px; border-radius: 4px; }
+        .source-title { font-weight: bold; color: #2c3e50; display: flex; align-items: center; gap: 10px; }
+        .reason-badge { background-color: #e9ecef; color: #495057; font-size: 0.8rem; padding: 4px 8px; border-radius: 4px; font-weight: bold; margin-bottom: 10px; display: inline-block; }
+        .btn-back { margin-top: 20px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="mb-5 border-bottom pb-3">
+        <h2 class="fw-bold"><i class="bi bi-journal-check"></i> 参照データソースと選定根拠</h2>
+        <p class="text-secondary">本システム（Rehaence）で使用している統計データ、および判定基準の出典について解説します。</p>
+    </div>
+
+    <div class="source-card">
+        <div class="reason-badge">平均値の基準</div>
+        <h4 class="source-title"><i class="bi bi-bar-chart-fill"></i> スポーツ庁「体力・運動能力調査」</h4>
+        <p class="small text-muted mb-3">出典：令和5年度 体力・運動能力調査報告書 (2024年10月公表)</p>
+        
+        <h6 class="fw-bold text-dark">採用理由</h6>
+        <p>
+            日本国民の身体能力を示す最も大規模かつ公式な統計データであるためです。<br>
+            リハビリテーションの目標設定において「同年代の平均」を知ることは重要ですが、小規模な研究データでは偏りが生じる可能性があります。本システムでは、国が実施する数万人規模の調査データをベースにすることで、日本の生活様式に即した最も信頼性の高い「平均像」を提示しています。
+        </p>
+        <hr>
+        <p class="small mb-0"><strong>適用項目：</strong> 握力、開眼片足立ち、10m歩行（※年齢区分ごとの補正値を含む）</p>
+    </div>
+
+    <div class="source-card" style="border-left-color: #198754;">
+        <div class="reason-badge">サルコペニア判定基準</div>
+        <h4 class="source-title text-success"><i class="bi bi-activity"></i> AWGS 2019 (Asian Working Group for Sarcopenia)</h4>
+        <p class="small text-muted mb-3">出典：Chen LK, et al. JAMDA. 2020.</p>
+        
+        <h6 class="fw-bold text-dark">採用理由</h6>
+        <p>
+            欧米人の体格基準（EWGSOP）ではなく、アジア人の体格に特化した診断基準であるためです。<br>
+            筋肉量の減少（サルコペニア）は転倒や寝たきりの主要因となりますが、欧米の基準をそのまま日本人に当てはめると、体格差により不正確な評価となる恐れがあります。本システムでは、アジアのリハビリテーション現場で標準的に使用されるAWGS 2019を採用し、日本人高齢者に適したリスク判定を行っています。
+        </p>
+        <hr>
+        <p class="small mb-0"><strong>適用項目：</strong> 握力（男性&lt;28kg, 女性&lt;18kg）、下腿周径（男性&lt;34cm, 女性&lt;33cm）、5回立ち上がり（≧12秒）</p>
+    </div>
+
+    <div class="source-card" style="border-left-color: #fd7e14;">
+        <div class="reason-badge">転倒リスク判定基準</div>
+        <h4 class="source-title text-warning"><i class="bi bi-exclamation-triangle-fill"></i> Shumway-Cook et al. (TUG基準)</h4>
+        <p class="small text-muted mb-3">出典：Shumway-Cook A, et al. Phys Ther. 2000.</p>
+        
+        <h6 class="fw-bold text-dark">採用理由</h6>
+        <p>
+            「転倒リスク」を予測する上で、世界的に最もエビデンスレベルが高い研究の一つであるためです。<br>
+            TUG（Timed Up & Go Test）における「13.5秒」というカットオフ値は、地域在住高齢者が転倒する確率が有意に上昇する境界線として広く支持されています。単に「歩くのが遅い」だけでなく、「転倒の危険性が高い状態にある」ことを客観的に伝えるために、この基準を採用しています。
+        </p>
+        <hr>
+        <p class="small mb-0"><strong>適用項目：</strong> TUG（≧13.5秒で転倒リスクありと判定）</p>
+    </div>
+
+    <div class="source-card" style="border-left-color: #0dcaf0;">
+        <div class="reason-badge">運動器機能判定</div>
+        <h4 class="source-title text-info"><i class="bi bi-person-walking"></i> 日本整形外科学会「運動器不安定症」基準</h4>
+        <p class="small text-muted mb-3">出典：日本整形外科学会 運動器不安定症診断基準</p>
+        
+        <h6 class="fw-bold text-dark">採用理由</h6>
+        <p>
+            日本の医療現場において、介護予防の観点から最もスタンダードな指標であるためです。<br>
+            開眼片足立ちはバランス能力の指標ですが、日本整形外科学会が定める「15秒未満」という基準は、運動器の機能低下（ロコモティブシンドローム等）を早期に発見するための重要なスクリーニング基準として機能しています。
+        </p>
+        <hr>
+        <p class="small mb-0"><strong>適用項目：</strong> 開眼片足立ち（15秒未満でリスクありと判定）</p>
+    </div>
+
+    <div class="text-center mt-5">
+        <button onclick="window.close()" class="btn btn-outline-dark px-5 py-2">このページを閉じる</button>
+        <p class="small text-muted mt-2">※元の評価画面は開いたままになっています</p>
+    </div>
+</div>
+
+</body>
+</html>
