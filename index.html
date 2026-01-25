@@ -35,7 +35,7 @@
     <div class="d-flex justify-content-between align-items-center mb-5">
         <div>
             <h2 class="fw-bold text-dark mb-0"><i class="bi bi-clipboard-data"></i> 身体機能評価レポート</h2>
-            <small class="text-muted">Physical Function Assessment System (All Ages)</small>
+            <small class="text-muted">Physical Function Assessment System (Static Version)</small>
         </div>
         <button onclick="window.print()" class="btn btn-outline-dark btn-sm no-print"><i class="bi bi-printer"></i> レポート印刷</button>
     </div>
@@ -56,10 +56,10 @@
                 <div class="card-body">
                     <h6 class="fw-bold border-bottom pb-2 mb-3">基本情報</h6>
                     <div class="row g-2 mb-4">
-                        <div class="col-6"><label class="small fw-bold">年齢</label><input type="number" id="age" class="form-control" value="40" placeholder="20-99"></div>
+                        <div class="col-6"><label class="small fw-bold">年齢</label><input type="number" id="age" class="form-control" value="40"></div>
                         <div class="col-6"><label class="small fw-bold">性別</label><select id="gender" class="form-select"><option value="female">女性</option><option value="male">男性</option></select></div>
-                        <div class="col-6"><label class="small fw-bold">身長 (cm)</label><input type="number" id="height" class="form-control"></div>
-                        <div class="col-6"><label class="small fw-bold">体重 (kg)</label><input type="number" id="weight" class="form-control"></div>
+                        <div class="col-6"><label class="small fw-bold">身長 (cm)</label><input type="number" id="height" class="form-control" value="160"></div>
+                        <div class="col-6"><label class="small fw-bold">体重 (kg)</label><input type="number" id="weight" class="form-control" value="55"></div>
                     </div>
                     <h6 class="fw-bold border-bottom pb-2 mb-3">測定値</h6>
                     <table class="table table-sm align-middle small">
@@ -82,7 +82,7 @@
             </div>
 
             <div id="detailTableArea" class="mt-4" style="display:none;">
-                <h5 class="fw-bold border-bottom pb-2 mb-3"><i class="bi bi-table"></i> 詳細分析レポート (実数値)</h5>
+                <h5 class="fw-bold border-bottom pb-2 mb-3"><i class="bi bi-table"></i> 詳細分析レポート</h5>
                 <table class="table table-bordered table-striped table-result small align-middle text-center">
                     <thead class="table-dark">
                         <tr>
@@ -99,112 +99,48 @@
     </div>
 
     <div class="guide-section mt-4">
-        <h4 class="fw-bold border-bottom pb-3 mb-4"><i class="bi bi-ruler"></i> 測定マニュアル・実施基準</h4>
+        <h4 class="fw-bold border-bottom pb-3 mb-4"><i class="bi bi-ruler"></i> 測定マニュアル</h4>
         <div class="row g-4">
             <div class="col-md-4">
-                <h6 class="fw-bold text-dark border-bottom pb-2">TUG (Timed Up & Go)</h6>
-                <ul class="small ps-3 mb-0 text-secondary">
-                    <li><strong>手順:</strong> 椅子から立ち上がり、3m先を回って再び座るまでの時間。</li>
-                    <li class="mt-2 text-danger fw-bold">基準: 13.5秒以上で転倒リスク増</li>
-                </ul>
+                <h6 class="fw-bold text-dark border-bottom pb-2">TUG</h6>
+                <p class="small text-secondary">13.5秒以上で転倒リスク増</p>
             </div>
             <div class="col-md-4">
                 <h6 class="fw-bold text-dark border-bottom pb-2">下腿周径 (CC)</h6>
-                <ul class="small ps-3 mb-0 text-secondary">
-                    <li><strong>手順:</strong> 下腿の最大膨隆部を計測。</li>
-                    <li class="mt-2 text-danger fw-bold">基準: 男性34cm/女性33cm未満</li>
-                </ul>
+                <p class="small text-secondary">男性34cm/女性33cm未満でサルコペニア疑い</p>
             </div>
             <div class="col-md-4">
-                <h6 class="fw-bold text-dark border-bottom pb-2">5回立ち上がり (5CS)</h6>
-                <ul class="small ps-3 mb-0 text-secondary">
-                    <li><strong>手順:</strong> できるだけ速く5回の立ち座りを繰り返す時間。</li>
-                    <li class="mt-2 text-danger fw-bold">基準: 12秒以上で機能低下</li>
-                </ul>
+                <h6 class="fw-bold text-dark border-bottom pb-2">5回立ち上がり</h6>
+                <p class="small text-secondary">12秒以上で機能低下</p>
             </div>
         </div>
     </div>
 
-    <div class="developer-message rounded shadow-sm no-print">
-        <h5 class="fw-bold mb-3"><i class="bi bi-person-badge"></i> 開発者からのメッセージ</h5>
-        <div class="text-secondary" style="line-height: 1.8; font-size: 0.95rem;">
-            <p>
-                私は現役の作業療法士として、日々リハビリテーションの現場で患者様と向き合っています。<br>
-                臨床の現場では多くの検査や評価を行いますが、専門的な数値の羅列だけでは、患者様に「現在の身体の状態」や「リハビリによる変化」を直感的にお伝えすることが難しい場面が多々ありました。
-            </p>
-            <p class="mb-0">
-                「客観的なデータを視覚化し、患者様やご家族と一緒にグラフを見ながら、より納得感のあるリハビリ目標を共有したい」。<br>
-                そんな現場の切実な思いから、この評価システムを開発しました。<br>
-                このツールが、リハビリテーションに関わる専門職の皆様の業務支援となり、何より患者様の健康寿命の延伸の一助となれば幸いです。
-            </p>
-        </div>
-    </div>
-    
-    <div class="guide-section mt-5 no-print">
-        <h4 class="fw-bold border-bottom pb-3 mb-4 text-dark"><i class="bi bi-journal-medical"></i> リハビリテーションコラム</h4>
-        <div class="row g-5">
-            <div class="col-md-12">
-                <h5 class="fw-bold text-primary mb-2">1. なぜ「感覚」ではなく「数値」が必要なのか？</h5>
-                <p class="text-secondary small" style="line-height: 1.8;">
-                    リハビリテーションの現場において、「最近なんとなく足腰が弱った気がする」という主観的な訴えは頻繁に聞かれます。しかし、この「なんとなく」を放置することが、転倒事故への最大の入り口となります。数値を定期的に計測し、客観的なデータに基づいて運動習慣を見直すことが重要です。
-                </p>
-            </div>
-            <div class="col-md-6">
-                <h5 class="fw-bold text-success mb-2">2. 「TUG 13.5秒」の壁とは</h5>
-                <p class="text-secondary small" style="line-height: 1.8;">
-                    TUGテストにおいて、13.5秒というカットオフ値は非常に重要です。Shumway-Cookらの研究によると、この時間を超えると転倒リスクが有意に高まるとされています。
-                </p>
-            </div>
-            <div class="col-md-6">
-                <h5 class="fw-bold text-warning mb-2">3. サルコペニアとフレイルの予防</h5>
-                <p class="text-secondary small" style="line-height: 1.8;">
-                    特に下腿周径（ふくらはぎの太さ）は筋肉量を反映する簡易的な指標として有用です。本ツールの数値を参考にしつつ、適切な食事と運動を組み合わせることが推奨されます。
-                </p>
-            </div>
-        </div>
-    </div>
-
-<footer class="legal-footer no-print">
-        <div class="row">
-            <div class="col-md-6">
-                <h6 class="fw-bold mb-3"><i class="bi bi-shield-check"></i> 免責事項・データソース</h6>
-                <p>本システムは公開統計データに基づき身体機能の傾向を可視化するものであり、診断を行う医療機器ではありません。個別の医学的判断については医師にご相談ください。</p>
-                
-                <div class="d-flex gap-2 mt-3 flex-wrap">
-                    <a href="sources.html" target="_blank" class="btn btn-outline-secondary btn-sm">
-                        <i class="bi bi-journal-text"></i> データソースと選定根拠
-                    </a>
-                    <a href="privacy.html" target="_blank" class="btn btn-outline-secondary btn-sm">
-                        <i class="bi bi-file-earmark-lock"></i> プライバシーポリシー
-                    </a>
-                </div>
-            </div>
-            
-            <div class="col-md-6 border-start ps-md-5 mt-4 mt-md-0">
-                <h6 class="fw-bold mb-3"><i class="bi bi-info-circle"></i> 運営情報</h6>
-                <ul class="list-unstyled small text-muted">
-                    <li class="mb-2"><strong>運営：</strong> Rehaenceプロジェクト (個人運営)</li>
-                    <li class="mb-2"><strong>連絡先：</strong> rehaence1@gmail.com</li>
-                    <li><i class="bi bi-cookie"></i> 当サイトはGoogle AdSenseを利用し、Cookieを使用します。</li>
-                </ul>
-            </div>
-        </div>
+    <footer class="legal-footer no-print">
+        <p class="text-center">© 2026 Rehaence Project. All Rights Reserved.</p>
     </footer>
 </div>
 
 <script>
     const items = [
-        {id: 'grip', label: '握力', unit: 'kg'}, 
-        {id: 'calf', label: '下腿周径', unit: 'cm'},
-        {id: 'one_leg', label: '片脚立位', unit: '秒'}, 
-        {id: 'five_stand', label: '5回立ち', unit: '秒'},
-        {id: 'tug', label: 'TUG', unit: '秒'}, 
-        {id: 'walk', label: '10m歩行', unit: '秒'}
+        {id: 'grip', label: '握力', unit: 'kg', lowBetter: false}, 
+        {id: 'calf', label: '下腿周径', unit: 'cm', lowBetter: false},
+        {id: 'one_leg', label: '片脚立位', unit: '秒', lowBetter: false}, 
+        {id: 'five_stand', label: '5回立ち', unit: '秒', lowBetter: true},
+        {id: 'tug', label: 'TUG', unit: '秒', lowBetter: true}, 
+        {id: 'walk', label: '10m歩行', unit: '秒', lowBetter: true}
     ];
+
+    // 同年代平均のダミーデータ（年齢層ごとに本来は設定する）
+    const averages = {
+        male:   { grip: 40, calf: 35, one_leg: 30, five_stand: 7,  tug: 8,  walk: 7 },
+        female: { grip: 25, calf: 33, one_leg: 25, five_stand: 8,  tug: 9,  walk: 8 }
+    };
 
     let currentMode = 'average';
     let chartInstance = null;
 
+    // 入力フォーム生成
     const tbody = document.getElementById('input-table-body');
     items.forEach(item => {
         tbody.innerHTML += `
@@ -222,13 +158,13 @@
         prevInputs.forEach(el => el.style.display = (mode === 'average' ? 'none' : 'table-cell'));
     }
 
-    async function analyze() {
-        const age = document.getElementById('age').value;
+    function analyze() {
+        const age = parseFloat(document.getElementById('age').value);
         const gender = document.getElementById('gender').value;
-        const height = document.getElementById('height').value;
-        const weight = document.getElementById('weight').value;
-        const curr = {}; const prev = {};
+        const height = parseFloat(document.getElementById('height').value);
+        const weight = parseFloat(document.getElementById('weight').value);
         
+        const curr = {}; const prev = {};
         items.forEach(item => {
             const cVal = document.getElementById('curr_' + item.id).value;
             const pVal = document.getElementById('prev_' + item.id).value;
@@ -236,104 +172,90 @@
             prev[item.id] = pVal === "" ? null : parseFloat(pVal);
         });
 
-        try {
-            const response = await fetch('/api/analyze', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ mode: currentMode, age, gender, height, weight, curr, prev })
-            });
-            if (!response.ok) throw new Error("API Error");
-            const res = await response.json();
-            updateChart(res);
-            updateDetailTable(res);
-        } catch (e) {
-            console.error(e);
-            alert("エラー：通信に失敗しました。");
-        }
+        // BMI計算
+        const bmi = (weight / ((height / 100) * (height / 100))).toFixed(1);
+        let bmiStatus = "普通";
+        if (bmi >= 25) bmiStatus = "肥満";
+        else if (bmi < 18.5) bmiStatus = "低体重";
+
+        // スコア計算ロジック（簡易版：平均との比率）
+        const avgData = averages[gender];
+        const tableData = items.map(item => {
+            const userVal = curr[item.id];
+            const avgVal = avgData[item.id];
+            let score = 0;
+            let status = 'avg';
+
+            if (userVal !== null) {
+                if (item.lowBetter) {
+                    score = Math.max(0, 200 - (userVal / avgVal) * 100);
+                    status = userVal < avgVal ? 'good' : 'caution';
+                } else {
+                    score = (userVal / avgVal) * 100;
+                    status = userVal > avgVal ? 'good' : 'caution';
+                }
+            }
+            return { label: item.label, userVal, avgVal, unit: item.unit, score: Math.min(140, score), status };
+        });
+
+        const res = {
+            message: "分析が完了しました",
+            subMessage: `${age}歳 ${gender === 'male' ? '男性' : '女性'} の身体機能評価結果です`,
+            missingData: Object.values(curr).includes(null),
+            bmiInfo: { value: bmi, status: bmiStatus },
+            datasets: [
+                {
+                    label: 'あなたのスコア',
+                    data: tableData.map(d => d.score),
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgb(54, 162, 235)',
+                    pointBackgroundColor: 'rgb(54, 162, 235)',
+                    tableData: tableData
+                }
+            ],
+            tableData: tableData
+        };
+
+        updateChart(res);
+        updateDetailTable(res);
     }
 
     function updateChart(res) {
-        let noteHtml = res.missingData 
-            ? `<div class="mt-2 text-danger small"><i class="bi bi-exclamation-circle"></i> 未実施項目あり</div>` 
-            : `<div class="mt-2 text-success small"><i class="bi bi-check-circle"></i> 複合的評価完了</div>`;
-
-        document.getElementById('resBox').innerHTML = `<h5 class="fw-bold text-dark mb-1">${res.message}</h5><span class="text-secondary small">${res.subMessage}</span>${noteHtml}`;
-        
-        if(res.bmiInfo) {
-            document.getElementById('bmiBox').innerHTML = `<span class="badge bg-light text-dark border px-3 py-2">BMI: ${res.bmiInfo.value} (${res.bmiInfo.status})</span>`;
-        }
+        document.getElementById('resBox').innerHTML = `<h5 class="fw-bold text-dark mb-1">${res.message}</h5><span class="text-secondary small">${res.subMessage}</span>`;
+        document.getElementById('bmiBox').innerHTML = `<span class="badge bg-light text-dark border px-3 py-2">BMI: ${res.bmiInfo.value} (${res.bmiInfo.status})</span>`;
 
         const ctx = document.getElementById('mainChart').getContext('2d');
         if (chartInstance) chartInstance.destroy();
 
-        const chartLabels = items.map(i => `${i.label} (${i.unit})`);
-
-        const config = {
-            type: currentMode === 'history' ? 'bar' : 'radar',
-            data: { labels: chartLabels, datasets: res.datasets },
+        chartInstance = new Chart(ctx, {
+            type: 'radar',
+            data: { labels: items.map(i => i.label), datasets: res.datasets },
             options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: currentMode === 'history' ? { y: { beginAtZero: true } } 
-                : { 
-                    r: { 
-                        suggestedMin: 0, 
-                        suggestedMax: 140, 
-                        angleLines: { display: true }, 
-                        ticks: { 
-                            stepSize: 20, 
-                            backdropColor: 'transparent',
-                            callback: function(value) { return value + '%'; } 
-                        },
-                        pointLabels: { font: { size: 12, weight: 'bold' } }
-                    } 
-                },
-                plugins: {
-                    legend: { position: 'bottom' },
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                if (currentMode === 'average' && context.dataset.tableData) {
-                                    const data = context.dataset.tableData[context.dataIndex];
-                                    if(context.dataset.label.includes('あなた')) 
-                                        return `測定: ${data.userVal}${data.unit} (平均: ${data.avgVal}${data.unit})`;
-                                }
-                                return `${context.dataset.label}: ${context.formattedValue}${currentMode === 'average' ? '%' : ''}`;
-                            }
-                        }
-                    }
-                }
+                responsive: true, maintainAspectRatio: false,
+                scales: { r: { suggestedMin: 0, suggestedMax: 140, ticks: { stepSize: 20 } } },
+                plugins: { legend: { position: 'bottom' } }
             }
-        };
-        chartInstance = new Chart(ctx, config);
+        });
     }
 
     function updateDetailTable(res) {
         const tableArea = document.getElementById('detailTableArea');
         const tbody = document.getElementById('detailTableBody');
         tbody.innerHTML = "";
+        tableArea.style.display = "block";
 
-        if (res.tableData && res.tableData.length > 0) {
-            tableArea.style.display = "block";
-            res.tableData.forEach(d => {
-                let statusBadge = '-';
-                if(d.userVal) {
-                    if (d.status === 'good') statusBadge = '<span class="badge bg-primary">平均以上</span>';
-                    else if (d.status === 'avg') statusBadge = '<span class="badge bg-secondary">平均的</span>';
-                    else statusBadge = '<span class="badge bg-danger">注意</span>';
-                }
-                tbody.innerHTML += `
-                    <tr>
-                        <td class="fw-bold">${d.label}</td>
-                        <td class="fw-bold text-primary" style="font-size:1.1em">${d.userVal ? d.userVal : '-'} <span class="small text-muted">${d.unit}</span></td>
-                        <td>${d.avgVal} <span class="small text-muted">${d.unit}</span></td>
-                        <td>${statusBadge}</td>
-                    </tr>
-                `;
-            });
-        } else {
-            tableArea.style.display = "none";
-        }
+        res.tableData.forEach(d => {
+            const badge = d.status === 'good' ? 'bg-primary' : (d.status === 'caution' ? 'bg-danger' : 'bg-secondary');
+            const label = d.status === 'good' ? '平均以上' : (d.status === 'caution' ? '注意' : '平均的');
+            tbody.innerHTML += `
+                <tr>
+                    <td class="fw-bold">${d.label}</td>
+                    <td class="text-primary fw-bold">${d.userVal || '-'} ${d.unit}</td>
+                    <td>${d.avgVal} ${d.unit}</td>
+                    <td><span class="badge ${badge}">${label}</span></td>
+                </tr>
+            `;
+        });
     }
 </script>
 </body>
