@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rehaence | リハビリテーション評価プラットフォーム</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        body { background-color: #f8f9fa; font-family: "Helvetica Neue", Arial, sans-serif; color: #333; }
+        .hero-section { background-color: #2c3e50; color: white; padding: 100px 0 80px; margin-bottom: 50px; }
+        .feature-card { transition: transform 0.3s ease, box-shadow 0.3s ease; border: none; height: 100%; cursor: pointer; }
+        .feature-card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+        .card-icon { font-size: 3.5rem; color: #2c3e50; margin-bottom: 25px; }
+        .btn-enter { background-color: #2c3e50; color: white; padding: 10px 30px; border-radius: 50px; text-decoration: none; transition: background 0.2s; }
+        .btn-enter:hover { background-color: #1a252f; color: white; }
+        .legal-footer { font-size: 0.8rem; color: #6c757d; background: #f8f9fa; padding: 40px 0; margin-top: 100px; border-top: 1px solid #dee2e6; }
+    </style>
+</head>
+<body>
+
+    <div class="hero-section text-center">
+        <div class="container">
+            <h1 class="display-4 fw-bold mb-3"><i class="bi bi-activity"></i> Rehaence</h1>
+            <p class="lead mb-4">リハビリテーション評価統合プラットフォーム</p>
+            <p class="small text-white-50">Evidence-based Rehabilitation Assessment Platform</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row g-4 justify-content-center">
+            
+            <div class="col-md-5 col-lg-4">
+                <div class="card feature-card shadow-sm p-4 text-center" onclick="location.href='assessment.html'">
+                    <div class="card-body py-4">
+                        <div class="card-icon"><i class="bi bi-clipboard-data"></i></div>
+                        <h3 class="fw-bold mb-3">身体機能評価</h3>
+                        <p class="text-secondary mb-4">
+                            TUG・片脚立位・下腿周径などの実測値を入力し、<br>
+                            同年代平均と比較・可視化します。
+                        </p>
+                        <a href="assessment.html" class="btn-enter stretched-link">ツールを起動 <i class="bi bi-arrow-right-short"></i></a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer class="legal-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                    <h6 class="fw-bold mb-2">Rehaence Project</h6>
+                    <p class="mb-0">臨床をデータで可視化する。<br>作業療法士による開発プロジェクト。</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <ul class="list-inline mb-2">
+                        <li class="list-inline-item"><a href="privacy.html" class="text-secondary text-decoration-none">プライバシーポリシー</a></li>
+                        <li class="list-inline-item">|</li>
+                        <li class="list-inline-item"><a href="mailto:rehaence1@gmail.com" class="text-secondary text-decoration-none">お問い合わせ</a></li>
+                    </ul>
+                    <small class="d-block text-muted">&copy; 2026 Rehaence. All Rights Reserved.</small>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
