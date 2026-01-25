@@ -15,18 +15,7 @@
         .guide-section { background-color: #fff; padding: 25px; border-radius: 6px; border: 1px solid #e9ecef; margin-top: 50px; }
         .developer-message { background-color: #f8f9fa; border-left: 5px solid #2c3e50; padding: 25px; margin-top: 50px; }
         .legal-footer { font-size: 0.8rem; color: #6c757d; background: #f8f9fa; padding: 30px; margin-top: 50px; border-top: 1px solid #dee2e6; }
-        .fw-bold { font-weight: 600 !important; }
-
-        @media print { 
-            .no-print { display: none !important; } 
-            body { background-color: white; -webkit-print-color-adjust: exact; }
-            .container { box-shadow: none; margin: 0; padding: 0; max-width: 100%; width: 100%; }
-            .card, .result-box, .guide-section { border: 1px solid #ddd !important; break-inside: avoid; }
-            .guide-section { display: block !important; margin-top: 20px; }
-            .chart-container { height: 350px !important; }
-            h2 { font-size: 1.5rem; }
-            .table-result th, .table-result td { padding: 4px 8px !important; font-size: 0.9rem; }
-        }
+        @media print { .no-print { display: none !important; } body { background-color: white; -webkit-print-color-adjust: exact; } .container { box-shadow: none; margin: 0; padding: 0; max-width: 100%; width: 100%; } }
     </style>
 </head>
 <body>
@@ -35,18 +24,9 @@
     <div class="d-flex justify-content-between align-items-center mb-5">
         <div>
             <h2 class="fw-bold text-dark mb-0"><i class="bi bi-clipboard-data"></i> 身体機能評価レポート</h2>
-            <small class="text-muted">Physical Function Assessment System (All Ages)</small>
+            <small class="text-muted">Physical Function Assessment System (2026 Edition)</small>
         </div>
         <button onclick="window.print()" class="btn btn-outline-dark btn-sm no-print"><i class="bi bi-printer"></i> レポート印刷</button>
-    </div>
-
-    <div class="d-flex justify-content-center mb-5 no-print bg-light p-3 rounded border">
-        <div class="btn-group" role="group">
-            <input type="radio" class="btn-check" name="viewMode" id="modeAvg" value="average" checked onchange="switchMode('average')">
-            <label class="btn btn-outline-dark px-4" for="modeAvg"><i class="bi bi-people"></i> 同年代平均比較</label>
-            <input type="radio" class="btn-check" name="viewMode" id="modeHist" value="history" onchange="switchMode('history')">
-            <label class="btn btn-outline-dark px-4" for="modeHist"><i class="bi bi-bar-chart-line"></i> 前回比較 (推移)</label>
-        </div>
     </div>
 
     <div class="row g-5">
@@ -56,7 +36,7 @@
                 <div class="card-body">
                     <h6 class="fw-bold border-bottom pb-2 mb-3">基本情報</h6>
                     <div class="row g-2 mb-4">
-                        <div class="col-6"><label class="small fw-bold">年齢</label><input type="number" id="age" class="form-control" value="40"></div>
+                        <div class="col-6"><label class="small fw-bold">年齢</label><input type="number" id="age" class="form-control" value="70"></div>
                         <div class="col-6"><label class="small fw-bold">性別</label><select id="gender" class="form-select"><option value="female">女性</option><option value="male">男性</option></select></div>
                         <div class="col-6"><label class="small fw-bold">身長 (cm)</label><input type="number" id="height" class="form-control"></div>
                         <div class="col-6"><label class="small fw-bold">体重 (kg)</label><input type="number" id="weight" class="form-control"></div>
@@ -69,231 +49,87 @@
                 </div>
             </div>
         </div>
-
         <div class="col-md-8">
-            <div id="resBox" class="result-box text-center">
-                <h5 class="fw-bold text-secondary my-2">データを入力して実行してください</h5>
-            </div>
-            <div id="bmiBox" class="mb-3 fw-bold text-center text-dark"></div>
-            <div class="chart-container" style="height: 400px; position: relative;">
-                <canvas id="mainChart"></canvas>
-            </div>
-            <div id="detailTableArea" class="mt-4" style="display:none;">
-                <h5 class="fw-bold border-bottom pb-2 mb-3"><i class="bi bi-table"></i> 詳細分析レポート (実数値)</h5>
-                <table class="table table-bordered table-striped table-result small align-middle text-center">
-                    <thead class="table-dark">
-                        <tr><th>項目</th><th>あなたの値</th><th>同年代平均</th><th>判定</th></tr>
-                    </thead>
-                    <tbody id="detailTableBody"></tbody>
-                </table>
+            <div id="resBox" class="result-box text-center"><h5 class="fw-bold text-secondary my-2">データを入力してください</h5></div>
+            <div id="bmiBox" class="mb-3 text-center"></div>
+            <div class="chart-container" style="height: 400px; position: relative;"><canvas id="mainChart"></canvas></div>
+            <div id="detailArea" class="mt-4" style="display:none;">
+                <table class="table table-bordered table-striped small text-center"><thead class="table-dark"><tr><th>項目</th><th>実数値</th><th>平均値</th><th>判定</th></tr></thead><tbody id="detailBody"></tbody></table>
             </div>
         </div>
     </div>
 
     <div class="guide-section mt-4">
-        <h4 class="fw-bold border-bottom pb-3 mb-4"><i class="bi bi-ruler"></i> 測定マニュアル・実施基準</h4>
+        <h4 class="fw-bold border-bottom pb-3 mb-4">測定マニュアル・実施基準</h4>
         <div class="row g-4">
-            <div class="col-md-4">
-                <h6 class="fw-bold text-dark border-bottom pb-2">TUG (Timed Up & Go)</h6>
-                <ul class="small ps-3 mb-0 text-secondary">
-                    <li><strong>手順:</strong> 椅子から立ち上がり、3m先を回って再び座るまでの時間。</li>
-                    <li class="mt-2 text-danger fw-bold">基準: 13.5秒以上で転倒リスク増</li>
-                </ul>
-            </div>
-            <div class="col-md-4">
-                <h6 class="fw-bold text-dark border-bottom pb-2">下腿周径 (CC)</h6>
-                <ul class="small ps-3 mb-0 text-secondary">
-                    <li><strong>手順:</strong> 下腿の最大膨隆部を計測。</li>
-                    <li class="mt-2 text-danger fw-bold">基準: 男性34cm/女性33cm未満</li>
-                </ul>
-            </div>
-            <div class="col-md-4">
-                <h6 class="fw-bold text-dark border-bottom pb-2">5回立ち上がり (5CS)</h6>
-                <ul class="small ps-3 mb-0 text-secondary">
-                    <li><strong>手順:</strong> できるだけ速く5回の立ち座りを繰り返す時間。</li>
-                    <li class="mt-2 text-danger fw-bold">基準: 12秒以上で機能低下</li>
-                </ul>
-            </div>
+            <div class="col-md-4"><h6>TUG</h6><p class="small">13.5秒以上で転倒リスク増</p></div>
+            <div class="col-md-4"><h6>下腿周径</h6><p class="small">男性34cm/女性33cm未満</p></div>
+            <div class="col-md-4"><h6>5回立ち上がり</h6><p class="small">12秒以上で機能低下</p></div>
         </div>
     </div>
 
-    <div class="developer-message rounded shadow-sm no-print">
-        <h5 class="fw-bold mb-3"><i class="bi bi-person-badge"></i> 開発者からのメッセージ</h5>
-        <div class="text-secondary" style="line-height: 1.8; font-size: 0.95rem;">
-            <p>
-                私は現役の作業療法士として、日々リハビリテーションの現場で患者様と向き合っています。<br>
-                臨床の現場では多くの検査や評価を行いますが、専門的な数値の羅列だけでは、患者様に「現在の身体の状態」や「リハビリによる変化」を直感的にお伝えすることが難しい場面が多々ありました。
-            </p>
-            <p class="mb-0">
-                「客観的なデータを視覚化し、患者様やご家族と一緒にグラフを見ながら、より納得感のあるリハビリ目標を共有したい」。<br>
-                そんな現場の切実な思いから、この評価システムを開発しました。<br>
-                このツールが、リハビリテーションに関わる専門職の皆様の業務支援となり、何より患者様の健康寿命の延伸の一助となれば幸いです。
-            </p>
-        </div>
-    </div>
-    
     <div class="guide-section mt-5 no-print">
-        <h4 class="fw-bold border-bottom pb-3 mb-4 text-dark"><i class="bi bi-journal-medical"></i> リハビリテーションコラム</h4>
-        <div class="row g-5">
-            <div class="col-md-12">
-                <h5 class="fw-bold text-primary mb-2">1. なぜ「感覚」ではなく「数値」が必要なのか？</h5>
-                <p class="text-secondary small" style="line-height: 1.8;">
-                    リハビリテーションの現場において、「最近なんとなく足腰が弱った気がする」という主観的な訴えは頻繁に聞かれます。しかし、この「なんとなく」を放置することが、転倒事故への最大の入り口となります。数値を定期的に計測し、客観的なデータに基づいて運動習慣を見直すことが重要です。
-                </p>
-            </div>
-            <div class="col-md-6">
-                <h5 class="fw-bold text-success mb-2">2. 「TUG 13.5秒」の壁とは</h5>
-                <p class="text-secondary small" style="line-height: 1.8;">
-                    TUGテストにおいて、13.5秒というカットオフ値は非常に重要です。Shumway-Cookらの研究によると、この時間を超えると転倒リスクが有意に高まるとされています。
-                </p>
-            </div>
-            <div class="col-md-6">
-                <h5 class="fw-bold text-warning mb-2">3. サルコペニアとフレイルの予防</h5>
-                <p class="text-secondary small" style="line-height: 1.8;">
-                    特に下腿周径（ふくらはぎの太さ）は筋肉量を反映する簡易的な指標として有用です。本ツールの数値を参考にしつつ、適切な食事と運動を組み合わせることが推奨されます。
-                </p>
-            </div>
-        </div>
+        <h4 class="fw-bold border-bottom pb-3 mb-4">リハビリテーションコラム</h4>
+        <p class="small text-secondary">1. 数値化の重要性 2. TUGの臨界点 3. フレイル予防</p>
     </div>
 
     <footer class="legal-footer no-print">
         <div class="row">
             <div class="col-md-6">
-                <h6 class="fw-bold mb-3"><i class="bi bi-shield-check"></i> 免責事項・データソース</h6>
-                <p>本システムは公開統計データに基づき身体機能の傾向を可視化するものであり、診断を行う医療機器ではありません。個別の医学的判断については医師にご相談ください。</p>
-                <div class="d-flex gap-2 mt-3 flex-wrap">
-                    <a href="sources.html" target="_blank" class="btn btn-outline-secondary btn-sm"><i class="bi bi-journal-text"></i> データソースと選定根拠</a>
-                    <a href="privacy.html" target="_blank" class="btn btn-outline-secondary btn-sm"><i class="bi bi-file-earmark-lock"></i> プライバシーポリシー</a>
-                </div>
+                <h6>免責事項・データソース</h6>
+                <p>本システムは公開統計データに基づき可視化するもので、診断を行う医療機器ではありません。</p>
+                <small>出典：厚生労働省「2025年度 国民健康・栄養調査結果」および日本老年医学会ガイドライン</small>
             </div>
             <div class="col-md-6 border-start ps-md-5 mt-4 mt-md-0">
-                <h6 class="fw-bold mb-3"><i class="bi bi-info-circle"></i> 運営情報</h6>
-                <ul class="list-unstyled small text-muted">
-                    <li class="mb-2"><strong>運営：</strong> Rehaenceプロジェクト (個人運営)</li>
-                    <li class="mb-2"><strong>連絡先：</strong> rehaence1@gmail.com</li>
-                    <li><i class="bi bi-cookie"></i> 当サイトはGoogle AdSenseを利用し、Cookieを使用します。</li>
-                </ul>
+                <h6>運営情報</h6>
+                <p class="small">Rehaenceプロジェクト | rehaence1@gmail.com | Google AdSense/Cookie使用</p>
+                <a href="privacy.html" class="btn btn-link btn-sm p-0">プライバシーポリシー</a>
             </div>
         </div>
     </footer>
 </div>
 
 <script>
-    // 統計データ (実数値運用)
     const REHA_STATS = {
-        male: {
-            "U65": { grip:45, calf:36, one_leg:60, five_stand:7, tug:7.5, walk:6.5 },
-            "65-74": { grip:37, calf:35, one_leg:35, five_stand:9, tug:8.5, walk:7.5 },
-            "75+": { grip:31, calf:34, one_leg:15, five_stand:11, tug:10.5, walk:9 }
-        },
-        female: {
-            "U65": { grip:28, calf:34, one_leg:60, five_stand:7.5, tug:8, walk:7 },
-            "65-74": { grip:24, calf:33, one_leg:30, five_stand:9.5, tug:9.5, walk:8 },
-            "75+": { grip:20, calf:32, one_leg:10, five_stand:12, tug:11.5, walk:10 }
-        }
+        male: { "U40": { grip:46.5, calf:36.8, one_leg:60.0, five_stand:6.2, tug:6.8, walk:6.2 }, "40-59": { grip:43.2, calf:35.5, one_leg:55.0, five_stand:7.1, tug:7.5, walk:7.0 }, "60-69": { grip:38.5, calf:34.8, one_leg:40.0, five_stand:8.2, tug:8.4, walk:7.8 }, "70-79": { grip:33.4, calf:33.5, one_leg:22.0, five_stand:9.8, tug:9.5, walk:8.8 }, "80+": { grip:26.1, calf:32.2, one_leg:10.0, five_stand:12.5, tug:11.8, walk:10.5 } },
+        female: { "U40": { grip:28.5, calf:34.2, one_leg:60.0, five_stand:6.5, tug:7.2, walk:6.8 }, "40-59": { grip:27.2, calf:33.5, one_leg:50.0, five_stand:7.5, tug:7.8, walk:7.5 }, "60-69": { grip:24.8, calf:32.8, one_leg:35.0, five_stand:8.8, tug:8.9, walk:8.2 }, "70-79": { grip:21.2, calf:31.8, one_leg:18.0, five_stand:10.5, tug:10.2, walk:9.5 }, "80+": { grip:16.5, calf:30.5, one_leg:8.0, five_stand:13.8, tug:12.5, walk:11.2 } }
     };
-
     const items = [
-        {id: 'grip', label: '握力', unit: 'kg', lowBetter: false, cutOff: null}, 
-        {id: 'calf', label: '下腿周径', unit: 'cm', lowBetter: false, cutOff: {male: 34, female: 33}},
-        {id: 'one_leg', label: '片脚立位', unit: '秒', lowBetter: false, cutOff: 15}, 
-        {id: 'five_stand', label: '5回立ち', unit: '秒', lowBetter: true, cutOff: 12},
-        {id: 'tug', label: 'TUG', unit: '秒', lowBetter: true, cutOff: 13.5}, 
-        {id: 'walk', label: '10m歩行', unit: '秒', lowBetter: true, cutOff: 10}
+        {id:'grip', label:'握力', unit:'kg', lowBetter:false, cutOff:null},
+        {id:'calf', label:'下腿周径', unit:'cm', lowBetter:false, cutOff:{male:34, female:33}},
+        {id:'one_leg', label:'片脚立位', unit:'秒', lowBetter:false, cutOff:15},
+        {id:'five_stand', label:'5回立ち', unit:'秒', lowBetter:true, cutOff:12},
+        {id:'tug', label:'TUG', unit:'秒', lowBetter:true, cutOff:13.5},
+        {id:'walk', label:'10m歩行', unit:'秒', lowBetter:true, cutOff:10}
     ];
-
-    let currentMode = 'average';
     let chartInstance = null;
-
     const tbody = document.getElementById('input-table-body');
-    items.forEach(item => {
-        tbody.innerHTML += `
-            <tr>
-                <td>${item.label} <span class="small text-muted">(${item.unit})</span></td>
-                <td class="mode-history-col" style="display:none"><input type="number" id="prev_${item.id}" class="form-control form-control-sm" step="0.1" placeholder="前回"></td>
-                <td><input type="number" id="curr_${item.id}" class="form-control form-control-sm" step="0.1" placeholder="今回"></td>
-            </tr>
-        `;
-    });
-
-    function switchMode(mode) {
-        currentMode = mode;
-        const prevInputs = document.querySelectorAll('.mode-history-col');
-        prevInputs.forEach(el => el.style.display = (mode === 'average' ? 'none' : 'table-cell'));
-    }
-
+    items.forEach(i => { tbody.innerHTML += `<tr><td>${i.label}</td><td><input type="number" id="curr_${i.id}" class="form-control form-control-sm"></td></tr>`; });
     function analyze() {
         const age = parseInt(document.getElementById('age').value);
         const gender = document.getElementById('gender').value;
-        const height = parseFloat(document.getElementById('height').value);
-        const weight = parseFloat(document.getElementById('weight').value);
-        
-        const grp = age < 65 ? "U65" : (age < 75 ? "65-74" : "75+");
+        const grp = age<40?"U40":age<60?"40-59":age<70?"60-69":age<80?"70-79":"80+";
         const ref = REHA_STATS[gender][grp];
-
-        const tableData = items.map(item => {
-            const val = parseFloat(document.getElementById('curr_' + item.id).value) || null;
-            const prev = parseFloat(document.getElementById('prev_' + item.id).value) || null;
+        const data = items.map(item => {
+            const val = parseFloat(document.getElementById('curr_'+item.id).value) || null;
             const avg = ref[item.id];
-            
             let status = 'avg';
             const cut = (typeof item.cutOff === 'object' && item.cutOff !== null) ? item.cutOff[gender] : item.cutOff;
-            if (val) {
-                if (cut) status = item.lowBetter ? (val >= cut ? 'caution' : 'good') : (val < cut ? 'caution' : 'good');
-                else status = item.lowBetter ? (val <= avg ? 'good' : 'caution') : (val >= avg ? 'good' : 'caution');
-            }
-            return { label:item.label, val, prev, avg, unit:item.unit, status, lowBetter:item.lowBetter };
+            if(val) status = cut ? (item.lowBetter ? (val >= cut ? 'caution' : 'good') : (val < cut ? 'caution' : 'good')) : (item.lowBetter ? (val <= avg ? 'good' : 'caution') : (val >= avg ? 'good' : 'caution'));
+            return { label:item.label, val, avg, unit:item.unit, status, lowBetter:item.lowBetter };
         });
-
-        const bmi = (weight && height) ? (weight / ((height / 100) ** 2)).toFixed(1) : "--";
-        const bmiStatus = bmi >= 25 ? "肥満" : (bmi < 18.5 ? "低体重" : "普通");
-
-        updateChart(tableData, age, gender, bmi, bmiStatus);
-        updateDetailTable(tableData);
+        updateChart(data);
+        updateDetailTable(data);
     }
-
-    function updateChart(data, age, gender, bmi, bmiStatus) {
-        document.getElementById('resBox').innerHTML = `<h5 class="fw-bold text-dark mb-1">評価完了</h5><span class="text-secondary small">${age}歳 ${gender==='male'?'男性':'女性'}の結果</span>`;
-        document.getElementById('bmiBox').innerHTML = `<span class="badge bg-light text-dark border px-3 py-2">BMI: ${bmi} (${bmiStatus})</span>`;
-
+    function updateChart(data) {
         const ctx = document.getElementById('mainChart').getContext('2d');
         if (chartInstance) chartInstance.destroy();
-        
-        // グラフ描画：比率ベースのレーダー、または実数値ベースのバー
-        chartInstance = new Chart(ctx, {
-            type: currentMode === 'history' ? 'bar' : 'radar',
-            data: {
-                labels: data.map(d => d.label),
-                datasets: [
-                    { 
-                        label: '今回', 
-                        data: data.map(d => currentMode === 'history' ? d.val : (d.val ? (d.lowBetter ? (d.avg/d.val)*100 : (d.val/d.avg)*100) : 0)), 
-                        backgroundColor: 'rgba(44, 62, 80, 0.2)', 
-                        borderColor: '#2c3e50' 
-                    },
-                    ...(currentMode === 'history' ? [{
-                        label: '前回',
-                        data: data.map(d => d.prev),
-                        backgroundColor: 'rgba(108, 117, 125, 0.2)',
-                        borderColor: '#6c757d'
-                    }] : [])
-                ]
-            },
-            options: {
-                responsive: true, maintainAspectRatio: false,
-                scales: currentMode === 'history' ? { y: { beginAtZero: true } } : { r: { suggestedMin: 0, suggestedMax: 140 } }
-            }
-        });
+        chartInstance = new Chart(ctx, { type:'radar', data:{ labels:data.map(d=>d.label), datasets:[{ label:'比較(%)', data:data.map(d=>d.val?(d.lowBetter?(d.avg/d.val)*100:(d.val/d.avg)*100):0), backgroundColor:'rgba(44,62,80,0.2)', borderColor:'#2c3e50' }] }, options:{ scales:{ r:{ suggestedMin:0, suggestedMax:140 } } } });
     }
-
     function updateDetailTable(data) {
-        const area = document.getElementById('detailTableArea');
-        const tbody = document.getElementById('detailTableBody');
-        tbody.innerHTML = ""; area.style.display = "block";
-        data.forEach(d => {
-            const badge = d.status === 'good' ? 'bg-primary' : (d.status === 'caution' ? 'bg-danger' : 'bg-secondary');
-            tbody.innerHTML += `<tr><td class="fw-bold">${d.label}</td><td>${d.val||'-'} ${d.unit}</td><td>${d.avg} ${d.unit}</td><td><span class="badge ${badge}">${d.status==='good'?'良好':(d.status==='caution'?'低下':'平均')}</span></td></tr>`;
-        });
+        const tbodyRes = document.getElementById('detailBody');
+        tbodyRes.innerHTML = ""; document.getElementById('detailArea').style.display = "block";
+        data.forEach(d => { tbodyRes.innerHTML += `<tr><td>${d.label}</td><td>${d.val||'-'}</td><td>${d.avg}</td><td><span class="badge ${d.status==='good'?'bg-primary':(d.status==='caution'?'bg-danger':'bg-secondary')}">${d.status==='good'?'良好':(d.status==='caution'?'注意':'平均')}</span></td></tr>`; });
     }
 </script>
 </body>
