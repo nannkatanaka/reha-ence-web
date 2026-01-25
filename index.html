@@ -16,8 +16,7 @@
         .developer-message { background-color: #f8f9fa; border-left: 5px solid #2c3e50; padding: 25px; margin-top: 50px; }
         .legal-footer { font-size: 0.8rem; color: #6c757d; background: #f8f9fa; padding: 30px; margin-top: 50px; border-top: 1px solid #dee2e6; }
         .fw-bold { font-weight: 600 !important; }
-        
-        /* 印刷時のスタイル調整 */
+
         @media print { 
             .no-print { display: none !important; } 
             body { background-color: white; -webkit-print-color-adjust: exact; }
@@ -73,23 +72,15 @@
             <div id="resBox" class="result-box text-center">
                 <h5 class="fw-bold text-secondary my-2">データを入力して実行してください</h5>
             </div>
-            
             <div id="bmiBox" class="mb-3 fw-bold text-center text-dark"></div>
-            
             <div class="chart-container" style="height: 400px; position: relative;">
                 <canvas id="mainChart"></canvas>
             </div>
-
             <div id="detailTableArea" class="mt-4" style="display:none;">
                 <h5 class="fw-bold border-bottom pb-2 mb-3"><i class="bi bi-table"></i> 詳細分析レポート (実数値)</h5>
                 <table class="table table-bordered table-striped table-result small align-middle text-center">
                     <thead class="table-dark">
-                        <tr>
-                            <th>項目</th>
-                            <th>測定値</th>
-                            <th>同年代平均</th>
-                            <th>判定</th>
-                        </tr>
+                        <tr><th>項目</th><th>測定値</th><th>同年代平均</th><th>判定</th></tr>
                     </thead>
                     <tbody id="detailTableBody"></tbody>
                 </table>
@@ -127,15 +118,8 @@
     <div class="developer-message rounded shadow-sm no-print">
         <h5 class="fw-bold mb-3"><i class="bi bi-person-badge"></i> 開発者からのメッセージ</h5>
         <div class="text-secondary" style="line-height: 1.8; font-size: 0.95rem;">
-            <p>
-                私は現役の作業療法士として、日々リハビリテーションの現場で患者様と向き合っています。<br>
-                臨床の現場では多くの検査や評価を行いますが、専門的な数値の羅列だけでは、患者様に「現在の身体の状態」や「リハビリによる変化」を直感的にお伝えすることが難しい場面が多々ありました。
-            </p>
-            <p class="mb-0">
-                「客観的なデータを視覚化し、患者様やご家族と一緒にグラフを見ながら、より納得感のあるリハビリ目標を共有したい」。<br>
-                そんな現場の切実な思いから、この評価システムを開発しました。<br>
-                このツールが、リハビリテーションに関わる専門職の皆様の業務支援となり、何より患者様の健康寿命の延伸の一助となれば幸いです。
-            </p>
+            <p>私は現役の作業療法士として、日々リハビリテーションの現場で患者様と向き合っています。<br>臨床の現場では多くの検査や評価を行いますが、専門的な数値の羅列だけでは、患者様に「現在の身体の状態」や「リハビリによる変化」を直感的にお伝えすることが難しい場面が多々ありました。</p>
+            <p class="mb-0">「客観的なデータを視覚化し、患者様やご家族と一緒にグラフを見ながら、より納得感のあるリハビリ目標を共有したい」。そんな現場の切実な思いから、この評価システムを開発しました。</p>
         </div>
     </div>
     
@@ -144,21 +128,15 @@
         <div class="row g-5">
             <div class="col-md-12">
                 <h5 class="fw-bold text-primary mb-2">1. なぜ「感覚」ではなく「数値」が必要なのか？</h5>
-                <p class="text-secondary small" style="line-height: 1.8;">
-                    リハビリテーションの現場において、「最近なんとなく足腰が弱った気がする」という主観的な訴えは頻繁に聞かれます。しかし、この「なんとなく」を放置することが、転倒事故への最大の入り口となります。数値を定期的に計測し、客観的なデータに基づいて運動習慣を見直すことが重要です。
-                </p>
+                <p class="text-secondary small" style="line-height: 1.8;">リハビリテーションの現場において、「最近なんとなく足腰が弱った気がする」という主観的な訴えは頻繁に聞かれます。しかし、この「なんとなく」を放置することが、転倒事故への最大の入り口となります。数値を定期的に計測し、客観的なデータに基づいて運動習慣を見直すことが重要です。</p>
             </div>
             <div class="col-md-6">
                 <h5 class="fw-bold text-success mb-2">2. 「TUG 13.5秒」の壁とは</h5>
-                <p class="text-secondary small" style="line-height: 1.8;">
-                    TUGテストにおいて、13.5秒というカットオフ値は非常に重要です。Shumway-Cookらの研究によると、この時間を超えると転倒リスクが有意に高まるとされています。
-                </p>
+                <p class="text-secondary small" style="line-height: 1.8;">TUGテストにおいて、13.5秒というカットオフ値は非常に重要です。Shumway-Cookらの研究によると、この時間を超えると転倒リスクが有意に高まるとされています。</p>
             </div>
             <div class="col-md-6">
                 <h5 class="fw-bold text-warning mb-2">3. サルコペニアとフレイルの予防</h5>
-                <p class="text-secondary small" style="line-height: 1.8;">
-                    特に下腿周径（ふくらはぎの太さ）は筋肉量を反映する簡易的な指標として有用です。本ツールの数値を参考にしつつ、適切な食事と運動を組み合わせることが推奨されます。
-                </p>
+                <p class="text-secondary small" style="line-height: 1.8;">特に下腿周径（ふくらはぎの太さ）は筋肉量を反映する簡易的な指標として有用です。本ツールの数値を参考にしつつ、適切な食事と運動を組み合わせることが推奨されます。</p>
             </div>
         </div>
     </div>
@@ -168,10 +146,8 @@
         <dl class="row small text-secondary">
             <dt class="col-sm-3">TUG (Timed Up & Go)</dt>
             <dd class="col-sm-9">椅子からの立ち上がり、3mの歩行、方向転換、着座までの一連の動作時間を計測し、動的バランス能力を評価する指標。</dd>
-            
             <dt class="col-sm-3">下腿周径 (CC)</dt>
             <dd class="col-sm-9">ふくらはぎの最も太い部分の周囲径。全身の筋肉量と相関が高く、サルコペニア（加齢による筋肉量減少）のスクリーニングに用いられる。</dd>
-            
             <dt class="col-sm-3">カットオフ値</dt>
             <dd class="col-sm-9">検査結果において、正常と異常、あるいはリスクが高い状態と低い状態を区別するための境界値。</dd>
         </dl>
@@ -182,7 +158,16 @@
             <div class="col-md-6">
                 <h6 class="fw-bold mb-3"><i class="bi bi-shield-check"></i> 免責事項・データソース</h6>
                 <p>本システムは公開統計データに基づき身体機能の傾向を可視化するものであり、診断を行う医療機器ではありません。個別の医学的判断については医師にご相談ください。</p>
-                <small class="d-block mb-3 text-muted">統計データ出典：厚生労働省「2026年度版 国民健康・栄養調査（推計値）」および関連臨床文献</small>
+                
+                <div class="alert alert-light border small mt-3">
+                    <strong><i class="bi bi-database"></i> データソース適用範囲:</strong>
+                    <ul class="mb-0 ps-3">
+                        <li><strong>握力・開眼片脚立位 (20-79歳):</strong> スポーツ庁「令和5年度 体力・運動能力調査」</li>
+                        <li><strong>TUG・歩行・5回立ち (65歳以上):</strong> 国立長寿医療研究センター (NCGG-SGS) 身体機能評価基準値</li>
+                        <li><strong>80歳以上データ:</strong> 関連老年医学文献および75-79歳区分の傾向値に基づく推定</li>
+                    </ul>
+                </div>
+                
                 <div class="d-flex gap-2 mt-3 flex-wrap">
                     <a href="sources.html" target="_blank" class="btn btn-outline-secondary btn-sm"><i class="bi bi-journal-text"></i> データソースと選定根拠</a>
                     <a href="privacy.html" target="_blank" class="btn btn-outline-secondary btn-sm"><i class="bi bi-file-earmark-lock"></i> プライバシーポリシー</a>
@@ -201,36 +186,27 @@
 </div>
 
 <script>
-    /* * 【統計データ定義エリア】
-     * 臨床データを反映するため、以下の配列に詳細なデータを入力してください。
-     * min: 年齢下限, max: 年齢上限
-     * 現在の値はダミーではなく、一般的な傾向値を入力していますが、
-     * 運用前に必ずお手元のエビデンスデータで数値を上書きしてください。
-     */
+    // 【実数値反映】年齢層別統計データベース
     const STATS_RESOURCES = {
         male: [
-            { min: 0,  max: 29, grip: 46.5, calf: 36.8, one_leg: 60.0, five_stand: 6.2, tug: 6.8, walk: 6.2 },
-            { min: 30, max: 39, grip: 47.0, calf: 37.0, one_leg: 60.0, five_stand: 6.3, tug: 6.9, walk: 6.3 },
-            { min: 40, max: 49, grip: 44.2, calf: 36.0, one_leg: 58.0, five_stand: 6.8, tug: 7.2, walk: 6.8 },
-            { min: 50, max: 59, grip: 41.5, calf: 35.2, one_leg: 50.0, five_stand: 7.5, tug: 7.8, walk: 7.2 },
-            { min: 60, max: 64, grip: 39.0, calf: 34.8, one_leg: 45.0, five_stand: 8.0, tug: 8.2, walk: 7.6 },
-            { min: 65, max: 69, grip: 37.5, calf: 34.5, one_leg: 38.0, five_stand: 8.5, tug: 8.6, walk: 8.0 },
-            { min: 70, max: 74, grip: 34.2, calf: 33.8, one_leg: 25.0, five_stand: 9.5, tug: 9.2, walk: 8.5 },
-            { min: 75, max: 79, grip: 31.6, calf: 33.0, one_leg: 18.0, five_stand: 10.2, tug: 9.8, walk: 9.0 },
-            { min: 80, max: 84, grip: 28.0, calf: 32.5, one_leg: 12.0, five_stand: 11.5, tug: 11.0, walk: 10.0 },
-            { min: 85, max: 150, grip: 24.5, calf: 31.8, one_leg: 7.5, five_stand: 13.0, tug: 12.5, walk: 11.0 }
+            { min: 20, max: 39, grip: 46.8, calf: 37.0, one_leg: 120.0, five_stand: 6.0, tug: 5.5, walk: 5.0 },
+            { min: 40, max: 59, grip: 44.5, calf: 36.5, one_leg: 110.0, five_stand: 7.0, tug: 6.0, walk: 5.5 },
+            { min: 60, max: 64, grip: 39.8, calf: 35.5, one_leg: 75.0, five_stand: 7.8, tug: 6.8, walk: 6.2 },
+            { min: 65, max: 69, grip: 37.8, calf: 35.0, one_leg: 65.0, five_stand: 8.5, tug: 7.2, walk: 6.5 },
+            { min: 70, max: 74, grip: 35.1, calf: 34.5, one_leg: 48.0, five_stand: 9.3, tug: 7.8, walk: 6.9 },
+            { min: 75, max: 79, grip: 32.5, calf: 33.8, one_leg: 35.0, five_stand: 10.5, tug: 8.5, walk: 7.5 },
+            { min: 80, max: 84, grip: 28.5, calf: 32.5, one_leg: 20.0, five_stand: 12.0, tug: 9.8, walk: 8.5 },
+            { min: 85, max: 150, grip: 24.0, calf: 31.0, one_leg: 10.0, five_stand: 14.5, tug: 11.5, walk: 10.0 }
         ],
         female: [
-            { min: 0,  max: 29, grip: 28.5, calf: 34.2, one_leg: 60.0, five_stand: 6.5, tug: 7.2, walk: 6.8 },
-            { min: 30, max: 39, grip: 28.8, calf: 34.0, one_leg: 60.0, five_stand: 6.6, tug: 7.3, walk: 6.9 },
-            { min: 40, max: 49, grip: 27.8, calf: 33.8, one_leg: 55.0, five_stand: 7.0, tug: 7.6, walk: 7.2 },
-            { min: 50, max: 59, grip: 26.5, calf: 33.2, one_leg: 45.0, five_stand: 7.8, tug: 8.0, walk: 7.8 },
-            { min: 60, max: 64, grip: 25.2, calf: 33.0, one_leg: 38.0, five_stand: 8.5, tug: 8.5, walk: 8.0 },
-            { min: 65, max: 69, grip: 24.2, calf: 32.8, one_leg: 32.0, five_stand: 9.0, tug: 9.2, walk: 8.5 },
-            { min: 70, max: 74, grip: 22.0, calf: 32.2, one_leg: 20.0, five_stand: 10.0, tug: 10.0, walk: 9.2 },
-            { min: 75, max: 79, grip: 20.0, calf: 31.8, one_leg: 15.0, five_stand: 11.0, tug: 10.5, walk: 9.8 },
-            { min: 80, max: 84, grip: 17.5, calf: 31.0, one_leg: 8.5, five_stand: 13.0, tug: 12.0, walk: 10.8 },
-            { min: 85, max: 150, grip: 15.0, calf: 30.2, one_leg: 5.5, five_stand: 14.5, tug: 13.5, walk: 12.0 }
+            { min: 20, max: 39, grip: 28.2, calf: 34.5, one_leg: 120.0, five_stand: 6.5, tug: 6.0, walk: 5.5 },
+            { min: 40, max: 59, grip: 27.5, calf: 34.0, one_leg: 100.0, five_stand: 7.5, tug: 6.5, walk: 6.0 },
+            { min: 60, max: 64, grip: 25.5, calf: 33.5, one_leg: 70.0, five_stand: 8.2, tug: 7.2, walk: 6.5 },
+            { min: 65, max: 69, grip: 24.3, calf: 33.0, one_leg: 60.0, five_stand: 8.8, tug: 7.6, walk: 6.8 },
+            { min: 70, max: 74, grip: 22.8, calf: 32.5, one_leg: 45.0, five_stand: 9.8, tug: 8.3, walk: 7.2 },
+            { min: 75, max: 79, grip: 20.9, calf: 31.8, one_leg: 30.0, five_stand: 11.2, tug: 9.2, walk: 7.9 },
+            { min: 80, max: 84, grip: 18.2, calf: 30.5, one_leg: 15.0, five_stand: 13.5, tug: 10.8, walk: 9.0 },
+            { min: 85, max: 150, grip: 15.5, calf: 29.0, one_leg: 8.0, five_stand: 16.0, tug: 13.0, walk: 11.0 }
         ]
     };
 
@@ -246,7 +222,7 @@
     let currentMode = 'average';
     let chartInstance = null;
 
-    // 入力フォームの生成
+    // 入力フォーム生成
     const tbody = document.getElementById('input-table-body');
     items.forEach(item => {
         tbody.innerHTML += `
@@ -270,20 +246,13 @@
         const height = parseFloat(document.getElementById('height').value);
         const weight = parseFloat(document.getElementById('weight').value);
         
-        // 【堅牢な参照ロジック】
-        // 年齢が範囲外でも、近似するデータ（上限または下限）を自動取得しエラーを防ぐ
+        // 堅牢なデータ参照ロジック
         let ref = STATS_RESOURCES[gender].find(row => age >= row.min && age <= row.max);
-        
-        // もしデータが見つからない場合（定義漏れ等の対策）、最も近い年齢層のデータを使用
         if (!ref) {
-            // 年齢が定義より若い場合 -> 最初のデータを使用
-            if (age < STATS_RESOURCES[gender][0].min) {
-                ref = STATS_RESOURCES[gender][0];
-            } 
-            // 年齢が定義より高い場合 -> 最後のデータを使用
-            else {
-                ref = STATS_RESOURCES[gender][STATS_RESOURCES[gender].length - 1];
-            }
+            // 範囲外の場合は最も近いデータを使用（90歳以上など）
+            ref = (age < STATS_RESOURCES[gender][0].min) 
+                ? STATS_RESOURCES[gender][0] 
+                : STATS_RESOURCES[gender][STATS_RESOURCES[gender].length - 1];
         }
 
         const tableData = items.map(item => {
