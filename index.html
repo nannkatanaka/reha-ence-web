@@ -82,7 +82,7 @@
                 <h5 class="fw-bold border-bottom pb-2 mb-3"><i class="bi bi-table"></i> 詳細分析レポート (実数値)</h5>
                 <table class="table table-bordered table-striped table-result small align-middle text-center">
                     <thead class="table-dark">
-                        <tr><th>項目</th><th>あなたの値</th><th>同年代平均(SD)</th><th>判定</th></tr>
+                        <tr><th>項目</th><th>あなたの値</th><th>同年代平均</th><th>判定</th></tr>
                     </thead>
                     <tbody id="detailTableBody"></tbody>
                 </table>
@@ -179,17 +179,17 @@
 </div>
 
 <script>
-    // 臨床統計データ定義 [平均, 標準偏差]
+    // 統計データ (実数値運用)
     const REHA_STATS = {
         male: {
-            "U65": { grip:[45,6], calf:[36,2], one_leg:[60,0], five_stand:[7,1.5], tug:[7.5,1.2], walk:[6.5,0.8] },
-            "65-74": { grip:[37,5], calf:[35,2], one_leg:[35,15], five_stand:[9,2], tug:[8.5,1.5], walk:[7.5,1] },
-            "75+": { grip:[31,5], calf:[34,2], one_leg:[15,10], five_stand:[11,3], tug:[10.5,2], walk:[9,1.5] }
+            "U65": { grip:45, calf:36, one_leg:60, five_stand:7, tug:7.5, walk:6.5 },
+            "65-74": { grip:37, calf:35, one_leg:35, five_stand:9, tug:8.5, walk:7.5 },
+            "75+": { grip:31, calf:34, one_leg:15, five_stand:11, tug:10.5, walk:9 }
         },
         female: {
-            "U65": { grip:[28,4], calf:[34,2], one_leg:[60,0], five_stand:[7.5,1.5], tug:[8,1.2], walk:[7,0.8] },
-            "65-74": { grip:[24,4], calf:[33,2], one_leg:[30,12], five_stand:[9.5,2], tug:[9.5,1.5], walk:[8,1] },
-            "75+": { grip:[20,4], calf:[32,2], one_leg:[10,8], five_stand:[12,3.5], tug:[11.5,2.5], walk:[10,2] }
+            "U65": { grip:28, calf:34, one_leg:60, five_stand:7.5, tug:8, walk:7 },
+            "65-74": { grip:24, calf:33, one_leg:30, five_stand:9.5, tug:9.5, walk:8 },
+            "75+": { grip:20, calf:32, one_leg:10, five_stand:12, tug:11.5, walk:10 }
         }
     };
 
@@ -234,55 +234,51 @@
         const tableData = items.map(item => {
             const val = parseFloat(document.getElementById('curr_' + item.id).value) || null;
             const prev = parseFloat(document.getElementById('prev_' + item.id).value) || null;
-            const [avg, sd] = ref[item.id];
+            const avg = ref[item.id];
             
-            let z = val ? (val - avg) / (sd || 1) : 0;
-            if (item.lowBetter) z *= -1;
-
             let status = 'avg';
             const cut = (typeof item.cutOff === 'object' && item.cutOff !== null) ? item.cutOff[gender] : item.cutOff;
             if (val) {
                 if (cut) status = item.lowBetter ? (val >= cut ? 'caution' : 'good') : (val < cut ? 'caution' : 'good');
-                else status = z < -1 ? 'caution' : (z > 1 ? 'good' : 'avg');
+                else status = item.lowBetter ? (val <= avg ? 'good' : 'caution') : (val >= avg ? 'good' : 'caution');
             }
-
-            return { label:item.label, val, prev, avg, sd, unit:item.unit, score: Math.min(140, Math.max(0, 100 + (z * 20))), status };
+            return { label:item.label, val, prev, avg, unit:item.unit, status, lowBetter:item.lowBetter };
         });
 
         const bmi = (weight && height) ? (weight / ((height / 100) ** 2)).toFixed(1) : "--";
         const bmiStatus = bmi >= 25 ? "肥満" : (bmi < 18.5 ? "低体重" : "普通");
 
-        updateChart({
-            message: "分析完了",
-            subMessage: `${age}歳 ${gender === 'male' ? '男性' : '女性'} の結果`,
-            bmiInfo: { value: bmi, status: bmiStatus },
-            datasets: [{
-                label: currentMode === 'average' ? '身体機能偏差値' : '今回測定値',
-                data: tableData.map(d => currentMode === 'average' ? d.score : d.val),
-                backgroundColor: 'rgba(44, 62, 80, 0.2)',
-                borderColor: '#2c3e50',
-                pointBackgroundColor: '#2c3e50'
-            },
-            ...(currentMode === 'history' ? [{
-                label: '前回測定値',
-                data: tableData.map(d => d.prev),
-                backgroundColor: 'rgba(108, 117, 125, 0.2)',
-                borderColor: '#6c757d'
-            }] : [])],
-            tableData: tableData
-        });
+        updateChart(tableData, age, gender, bmi, bmiStatus);
         updateDetailTable(tableData);
     }
 
-    function updateChart(res) {
-        document.getElementById('resBox').innerHTML = `<h5 class="fw-bold text-dark mb-1">${res.message}</h5><span class="text-secondary small">${res.subMessage}</span>`;
-        document.getElementById('bmiBox').innerHTML = `<span class="badge bg-light text-dark border px-3 py-2">BMI: ${res.bmiInfo.value} (${res.bmiInfo.status})</span>`;
+    function updateChart(data, age, gender, bmi, bmiStatus) {
+        document.getElementById('resBox').innerHTML = `<h5 class="fw-bold text-dark mb-1">評価完了</h5><span class="text-secondary small">${age}歳 ${gender==='male'?'男性':'女性'}の結果</span>`;
+        document.getElementById('bmiBox').innerHTML = `<span class="badge bg-light text-dark border px-3 py-2">BMI: ${bmi} (${bmiStatus})</span>`;
 
         const ctx = document.getElementById('mainChart').getContext('2d');
         if (chartInstance) chartInstance.destroy();
+        
+        // グラフ描画：比率ベースのレーダー、または実数値ベースのバー
         chartInstance = new Chart(ctx, {
             type: currentMode === 'history' ? 'bar' : 'radar',
-            data: { labels: items.map(i => i.label), datasets: res.datasets },
+            data: {
+                labels: data.map(d => d.label),
+                datasets: [
+                    { 
+                        label: '今回', 
+                        data: data.map(d => currentMode === 'history' ? d.val : (d.val ? (d.lowBetter ? (d.avg/d.val)*100 : (d.val/d.avg)*100) : 0)), 
+                        backgroundColor: 'rgba(44, 62, 80, 0.2)', 
+                        borderColor: '#2c3e50' 
+                    },
+                    ...(currentMode === 'history' ? [{
+                        label: '前回',
+                        data: data.map(d => d.prev),
+                        backgroundColor: 'rgba(108, 117, 125, 0.2)',
+                        borderColor: '#6c757d'
+                    }] : [])
+                ]
+            },
             options: {
                 responsive: true, maintainAspectRatio: false,
                 scales: currentMode === 'history' ? { y: { beginAtZero: true } } : { r: { suggestedMin: 0, suggestedMax: 140 } }
@@ -296,7 +292,7 @@
         tbody.innerHTML = ""; area.style.display = "block";
         data.forEach(d => {
             const badge = d.status === 'good' ? 'bg-primary' : (d.status === 'caution' ? 'bg-danger' : 'bg-secondary');
-            tbody.innerHTML += `<tr><td class="fw-bold">${d.label}</td><td>${d.val||'-'} ${d.unit}</td><td>${d.avg} (${d.sd})</td><td><span class="badge ${badge}">${d.status==='good'?'良好':(d.status==='caution'?'注意':'平均')}</span></td></tr>`;
+            tbody.innerHTML += `<tr><td class="fw-bold">${d.label}</td><td>${d.val||'-'} ${d.unit}</td><td>${d.avg} ${d.unit}</td><td><span class="badge ${badge}">${d.status==='good'?'良好':(d.status==='caution'?'低下':'平均')}</span></td></tr>`;
         });
     }
 </script>
