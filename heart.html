@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>目標心拍数 & Borgスケール (Karvonen) | Rehaence</title>
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-0000000000000000"
+     crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- 共通デザインルール (Rehaence Standard) --- */
+        body { background-color: #f8f9fa; font-family: "Helvetica Neue", Arial, sans-serif; color: #333; }
+        .container { max-width: 900px; background: white; padding: 40px; margin-top: 30px; margin-bottom: 50px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+        .card-header { font-weight: bold; background-color: #2c3e50 !important; color: white !important; }
+        .fw-bold { font-weight: 600 !important; }
+        .legal-footer { font-size: 0.8rem; color: #6c757d; background: #f8f9fa; padding: 30px; margin-top: 50px; border-top: 1px solid #dee2e6; }
+
+        /* アクセントカラー定義 */
+        :root {
+            --reha-navy: #2c3e50;
+            --reha-orange: #e67e22; /* 落ち着いたオレンジ */
+        }
+
+        /* 結果エリアスタイル */
+        .result-box { padding: 30px; border-radius: 6px; border: 1px solid #dee2e6; background-color: #f8f9fa; margin-top: 30px; display: none; }
+        .result-main-val { font-family: 'Roboto Mono', monospace; font-size: 3.5rem; font-weight: 700; color: var(--reha-navy); line-height: 1; }
+        .result-sub-label { font-size: 0.9rem; color: #6c757d; }
+        .result-sub-val { font-family: 'Roboto Mono', monospace; font-weight: bold; color: #333; }
+
+        /* テーブルスタイル */
+        .table-custom th { background-color: var(--reha-navy); color: white; text-align: center; font-weight: normal; font-size: 0.9rem; vertical-align: middle; }
+        .table-custom td { text-align: center; vertical-align: middle; font-size: 0.95rem; }
+        .highlight-row { background-color: #fff3cd !important; border: 2px solid #ffc107; font-weight: bold; }
+        
+        /* Borg関連の色統一 */
+        .text-borg { color: var(--reha-orange) !important; font-weight: bold; }
+        .borg-cell { font-weight: bold; color: var(--reha-orange); background-color: #fdf2e9; }
+
+        /* 注意書きエリア */
+        .note-card { border: none; border-left: 5px solid #ffc107; background-color: #fffbf0; }
+
+        @media print { 
+            .no-print { display: none !important; } 
+            body { background-color: white; -webkit-print-color-adjust: exact; }
+            .container { box-shadow: none; margin: 0; padding: 0; max-width: 100%; }
+            .highlight-row { background-color: #eee !important; border: 1px solid #999; }
+            .table-custom th { background-color: #ccc !important; color: black !important; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-5">
+        <div>
+            <a href="index.html" class="text-decoration-none text-secondary small mb-2 d-inline-block no-print">
+                <i class="bi bi-arrow-left"></i> ホームに戻る
+            </a>
+            <h2 class="fw-bold text-dark mb-0"><i class="bi bi-heart-pulse"></i> 目標心拍数 & Borgスケール</h2>
+            <small class="text-muted">Karvonen Method Calculation Tool</small>
+        </div>
+        <button onclick="window.print()" class="btn btn-outline-dark btn-sm no-print"><i class="bi bi-printer"></i> レポート印刷</button>
+    </div>
+
+    <div class="card border-0 shadow-sm mb-4">
+        <div class="card-header"><i class="bi bi-sliders"></i> 処方条件入力</div>
+        <div class="card-body p-4">
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <label class="small fw-bold mb-2 text-secondary">年齢 (歳)</label>
+                    <input type="number" id="age" class="form-control" placeholder="例: 75" value="75">
+                </div>
+                <div class="col-md-4">
+                    <label class="small fw-bold mb-2 text-secondary">安静時心拍数 (bpm)</label>
+                    <input type="number" id="restHR" class="form-control" placeholder="例: 70" value="70">
+                </div>
+                <div class="col-md-4">
+                    <label class="small fw-bold mb-2 text-secondary">目標強度 (%)</label>
+                    <div class="input-group">
+                        <input type="number" id="intensity" class="form-control fw-bold" placeholder="50" value="50" min="10" max="100" step="5">
+                        <span class="input-group-text text-secondary">%</span>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="btn btn-dark w-100 mt-4 py-3 fw-bold shadow-sm no-print" onclick="calculate()">計算・プラン作成</button>
+        </div>
+    </div>
+
+    <div id="result-area" class="result-box text-center">
+        <div class="mb-5">
+            <div class="text-secondary fw-bold small mb-2">TARGET HEART RATE</div>
+            <div class="d-flex justify-content-center align-items-baseline gap-2">
+                <span id="targetHR" class="result-main-val">--</span>
+                <span class="text-muted fs-4">bpm</span>
+            </div>
+            <div class="mt-3 d-flex justify-content-center gap-4 text-muted small">
+                <div>予測最大心拍数: <span id="maxHR" class="result-sub-val">--</span></div>
+                <div>|</div>
+                <div>予備心拍数 (HRR): <span id="hrr" class="result-sub-val">--</span></div>
+            </div>
+        </div>
+
+        <h5 class="fw-bold text-dark text-start border-bottom pb-2 mb-3"><i class="bi bi-table"></i> 強度・心拍数・Borg対照表</h5>
+        <div class="table-responsive">
+            <table class="table table-bordered table-custom table-hover">
+                <thead>
+                    <tr>
+                        <th width="20%">強度 (%HRR)</th>
+                        <th width="25%">目標脈拍 (bpm)</th>
+                        <th width="25%"><span class="text-borg">Borg (6-20)</span></th>
+                        <th width="30%">自覚的強度</th>
+                    </tr>
+                </thead>
+                <tbody id="referenceTable"></tbody>
+            </table>
+        </div>
+
+        <div class="note-card p-3 mt-4 text-start rounded shadow-sm">
+            <h6 class="fw-bold text-dark mb-2"><i class="bi bi-exclamation-triangle-fill text-warning"></i> 運動処方上の注意点</h6>
+            <ul class="mb-0 small text-secondary ps-3" style="line-height: 1.6;">
+                <li class="mb-1"><strong>β遮断薬服用者:</strong> 心拍数が上がりにくいため、計算値ではなく<strong>「Borg 11〜13 (楽〜ややきつい)」</strong>を優先してください。</li>
+                <li class="mb-1"><strong>不整脈 (心房細動等):</strong> 脈拍での管理が困難なため、自覚症状を指標としてください。</li>
+                <li><strong>中止基準:</strong> 計算値以下であっても、胸痛・強い息切れ・めまい等は即時中止としてください。</li>
+            </ul>
+        </div>
+    </div>
+
+    <footer class="legal-footer no-print">
+        <div class="row">
+            <div class="col-md-6">
+                <h6 class="fw-bold mb-3"><i class="bi bi-shield-check"></i> 免責事項</h6>
+                <p>本ツールは Karvonen法に基づく計算を行い、一般的な目安を提示するものです。医学的な運動処方は主治医の指示に従ってください。</p>
+            </div>
+            <div class="col-md-6 border-start ps-md-5 mt-4 mt-md-0">
+                <h6 class="fw-bold mb-3"><i class="bi bi-info-circle"></i> 運営情報</h6>
+                <ul class="list-unstyled small text-muted">
+                    <li class="mb-2"><strong>運営：</strong> Rehaenceプロジェクト</li>
+                    <li><a href="privacy.html" class="text-secondary">プライバシーポリシー</a></li>
+                    <li><a href="index.html" class="text-secondary">ホームに戻る</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+</div>
+
+<script>
+    function calculate() {
+        const age = parseFloat(document.getElementById('age').value);
+        const restHR = parseFloat(document.getElementById('restHR').value);
+        const intensity = parseFloat(document.getElementById('intensity').value);
+
+        if (!age || !restHR || isNaN(intensity)) {
+            alert("すべての項目を入力してください");
+            return;
+        }
+
+        // カルボーネン法の計算
+        const maxHR = 220 - age;
+        const hrr = maxHR - restHR;
+        const targetHR = Math.round((hrr * (intensity / 100)) + restHR);
+
+        // 結果表示
+        document.getElementById('targetHR').textContent = targetHR;
+        document.getElementById('maxHR').textContent = maxHR;
+        document.getElementById('hrr').textContent = hrr;
+
+        // テーブル生成
+        generateTable(maxHR, restHR, hrr, intensity);
+
+        // 表示エリアを開く
+        const resultArea = document.getElementById('result-area');
+        resultArea.style.display = 'block';
+        resultArea.scrollIntoView({behavior: "smooth"});
+    }
+
+    function generateTable(maxHR, restHR, hrr, currentIntensity) {
+        const tbody = document.getElementById('referenceTable');
+        tbody.innerHTML = "";
+
+        const levels = [
+            { pct: 30, borg: "9-10", label: "かなり楽 (Very Light)" },
+            { pct: 40, borg: "10-11", label: "楽である (Light)" },
+            { pct: 50, borg: "12-13", label: "ややきつい (Moderate)" },
+            { pct: 60, borg: "13-14", label: "ややきつい～きつい" },
+            { pct: 70, borg: "15-16", label: "きつい (Hard)" },
+            { pct: 80, borg: "17-18", label: "かなりきつい (Very Hard)" }
+        ];
+
+        levels.forEach(lvl => {
+            const thr = Math.round((hrr * (lvl.pct / 100)) + restHR);
+            const tr = document.createElement('tr');
+            
+            // 入力値に近い行をハイライト (±4%以内)
+            if (Math.abs(currentIntensity - lvl.pct) < 5) {
+                tr.classList.add('highlight-row');
+            }
+
+            tr.innerHTML = `
+                <td class="fw-bold text-secondary">${lvl.pct}%</td>
+                <td class="fw-bold fs-5" style="font-family: 'Roboto Mono'">${thr}</td>
+                <td class="borg-cell">${lvl.borg}</td>
+                <td class="text-start small text-secondary">${lvl.label}</td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+</script>
+
+</body>
+</html>
