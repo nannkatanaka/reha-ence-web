@@ -14,7 +14,7 @@
         .hero-section { background-color: #2c3e50; color: white; padding: 100px 0 80px; margin-bottom: 50px; }
         .feature-card { transition: transform 0.3s ease, box-shadow 0.3s ease; border: none; height: 100%; cursor: pointer; }
         .feature-card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
-        .card-icon { font-size: 3.5rem; color: #2c3e50; margin-bottom: 25px; }
+        .card-icon { font-size: 3rem; color: #2c3e50; margin-bottom: 20px; }
         .btn-enter { background-color: #2c3e50; color: white; padding: 10px 30px; border-radius: 50px; text-decoration: none; transition: background 0.2s; }
         .btn-enter:hover { background-color: #1a252f; color: white; }
         .legal-footer { font-size: 0.8rem; color: #6c757d; background: #f8f9fa; padding: 40px 0; margin-top: 100px; border-top: 1px solid #dee2e6; }
@@ -33,31 +33,41 @@
     <div class="container">
         <div class="row g-4 justify-content-center">
             
-            <div class="col-md-5 col-lg-4">
-                <div class="card feature-card shadow-sm p-4 text-center" onclick="location.href='assessment.html'">
-                    <div class="card-body py-4">
+            <div class="col-md-6 col-lg-4">
+                <div class="card feature-card shadow-sm text-center" onclick="location.href='assessment.html'">
+                    <div class="card-body p-4 d-flex flex-column h-100">
                         <div class="card-icon"><i class="bi bi-clipboard-data"></i></div>
-                        <h3 class="fw-bold mb-3">身体機能評価</h3>
-                        <p class="text-secondary mb-4">
-                            TUG・片脚立位・下腿周径などの実測値を入力し、<br>
-                            同年代平均と比較・可視化します。
+                        <h4 class="fw-bold mb-3">身体機能評価</h4>
+                        <p class="text-secondary small mb-4">
+                            TUG・片脚立位・下腿周径などの実測値を入力し、平均値と比較・グラフ化。
                         </p>
-                        <a href="assessment.html" class="btn-enter stretched-link">ツールを起動 <i class="bi bi-arrow-right-short"></i></a>
+                        <a href="assessment.html" class="btn-enter stretched-link mt-auto">ツールを開く</a>
                     </div>
                 </div>
             </div>
 
-            <div class="col-md-5 col-lg-4">
-                <div class="card feature-card shadow-sm p-4 text-center" onclick="location.href='gait.html'">
-                    <div class="card-body py-4">
-                        <div class="card-icon text-primary"><i class="bi bi-speedometer2"></i></div>
-                        <h3 class="fw-bold mb-3">10m歩行分析</h3>
-                        <p class="text-secondary mb-4">
-                            AWGS 2019基準および<br>
-                            身長比による精密な歩幅・速度分析。<br>
-<br>
+            <div class="col-md-6 col-lg-4">
+                <div class="card feature-card shadow-sm text-center" onclick="location.href='gait.html'">
+                    <div class="card-body p-4 d-flex flex-column h-100">
+                        <div class="card-icon"><i class="bi bi-speedometer2"></i></div>
+                        <h4 class="fw-bold mb-3">10m歩行分析</h4>
+                        <p class="text-secondary small mb-4">
+                            AWGS 2019基準・身長比による精密分析。ストップウォッチ機能搭載。
                         </p>
-                        <a href="gait.html" class="btn-enter stretched-link">ツールを起動 <i class="bi bi-arrow-right-short"></i></a>
+                        <a href="gait.html" class="btn-enter stretched-link mt-auto">ツールを開く</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+                <div class="card feature-card shadow-sm text-center" onclick="location.href='heart.html'">
+                    <div class="card-body p-4 d-flex flex-column h-100">
+                        <div class="card-icon"><i class="bi bi-heart-pulse"></i></div>
+                        <h4 class="fw-bold mb-3">目標心拍数 & Borg</h4>
+                        <p class="text-secondary small mb-4">
+                            Karvonen法による運動強度計算。
+                        </p>
+                        <a href="heart.html" class="btn-enter stretched-link mt-auto">ツールを開く</a>
                     </div>
                 </div>
             </div>
@@ -70,7 +80,7 @@
             <div class="row">
                 <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
                     <h6 class="fw-bold mb-2">Rehaence Project</h6>
-                    <p class="mb-0">臨床をデータで可視化する。<br>作業療法士による個人開発プロジェクト。</p>
+                    <p class="mb-0">臨床をデータで可視化する。<br>作業療法士による開発プロジェクト。</p>
                 </div>
                 <div class="col-md-6 text-center text-md-end">
                     <ul class="list-inline mb-2">
